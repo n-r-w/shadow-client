@@ -1,0 +1,15 @@
+FROM ubuntu:22.04
+
+RUN apt update && apt install -y wget iproute2 iptables
+
+RUN wget https://github.com/cbeuw/Cloak/releases/download/v2.7.0/ck-client-linux-amd64-v2.7.0
+RUN mv ck-client-linux-amd64-v2.7.0 ck-client
+RUN chmod +x ck-client
+
+COPY ck-client-up.sh /ck-client-up.sh
+RUN chmod +x /ck-client-up.sh
+
+COPY gen-ck-client-config.sh /gen-ck-client-config.sh
+RUN chmod +x /gen-ck-client-config.sh
+
+CMD ["/ck-client-up.sh"]

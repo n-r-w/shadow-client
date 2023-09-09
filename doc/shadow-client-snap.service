@@ -1,0 +1,15 @@
+[Unit]
+Description=Shadow VPN client
+Requires=snap.docker.dockerd.service
+After=snap.docker.dockerd.service
+
+[Service]
+Type=simple
+Restart=on-failure
+WorkingDirectory=/root/shadow-client
+ExecStart=/snap/bin/docker-compose up --build
+ExecReload=/snap/bin/docker-compose down && /snap/bin/docker-compose up --build
+ExecStop=/snap/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target

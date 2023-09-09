@@ -1,0 +1,11 @@
+FROM ubuntu:22.04
+
+RUN apt update && apt install -y wireguard openresolv iproute2 iptables
+
+COPY wg-client-up.sh /wg-client-up.sh
+RUN chmod +x /wg-client-up.sh
+
+COPY gen-wg-client-config.sh /gen-wg-client-config.sh
+RUN chmod +x /gen-wg-client-config.sh
+
+CMD ["/wg-client-up.sh"]
