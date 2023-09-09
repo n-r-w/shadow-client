@@ -15,7 +15,7 @@ Data flows through the following chain:
 - WireGuard server (remote)
 - Free Internet
 
-For simplicity, all operations are performed as root, using Ubuntu 22.04 as an example.
+For simplicity, all operations are performed as root, using Ubuntu 22.04 as an example. All settings are for IPv4 only.
 
 ## docker setup
 
