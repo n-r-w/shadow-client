@@ -17,24 +17,40 @@ Data flows through the following chain:
 
 For simplicity, all operations are performed as root, using Ubuntu 22.04 as an example. All settings are for IPv4 only.
 
+## Go to the home folder
+
+```bash
+cd /root
+```
+
 ## docker setup
 
 ### Install docker Manually
 
-- Install docker itself using the instructions at  <https://docs.docker.com/engine/install/ubuntu/>
-- Install docker-compose
+Install docker manually using manual at <https://docs.docker.com/engine/install/ubuntu/> + install docker-compose:
 
 ```bash
-cd /root
-wget https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64
-mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose
+apt update && apt install -y ca-certificates curl gnupg && \
+install -m 0755 -d /etc/apt/keyrings && \
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg --yes && \
+chmod a+r /etc/apt/keyrings/docker.gpg && \
+if [ ! -e /etc/apt/sources.list.d/docker.list ]; then
+echo \
+"deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+"$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+fi && \
+apt update && \
+apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
+wget https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 && \
+mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose && \
 chmod +x /usr/local/bin/docker-compose
 ```
 
 ### Alternatively, install docker via snap (easier)
 
 ```bash
-snap install docker
+apt install -y snapd && snap install docker
 ```
 
 ## Setup
@@ -42,8 +58,7 @@ snap install docker
 ### Download this repository
 
 ```bash
-git clone https://github.com/n-r-w/shadow-client.git
-cd shadow-client
+git clone https://github.com/n-r-w/shadow-client.git && cd shadow-client
 ```
 
 ### Set up environment variables for docker
@@ -51,7 +66,8 @@ cd shadow-client
 In the doc directory there is an example file with environment variables ```env.txt```. Copy it to the ```.env``` file, which contains environment variables for ```docker-compose```
 
 ```bash
-cp ./doc/env.txt ./.env
+apt install -y nano && \
+cp ./doc/env.txt ./.env && \
 nano ./.env
 ```
 
@@ -90,18 +106,18 @@ docker-compose down
 If installed via ```snap```:
 
 ```bash
-cp ./doc/shadow-client-snap.service /etc/systemd/system/shadow-client-snap.service
-systemctl daemon-reload
-systemctl enable shadow-client-snap
+cp ./doc/shadow-client-snap.service /etc/systemd/system/shadow-client-snap.service && \
+systemctl daemon-reload && \
+systemctl enable shadow-client-snap && \
 systemctl start shadow-client-snap
 ```
 
 If you installed it according to the instructions from the ubuntu website:
 
 ```bash
-cp ./doc/shadow-client.service /etc/systemd/system/shadow-client.service
-systemctl daemon-reload
-systemctl enable shadow-client
+cp ./doc/shadow-client.service /etc/systemd/system/shadow-client.service && \
+systemctl daemon-reload && \
+systemctl enable shadow-client && \
 systemctl start shadow-client
 ```
 
