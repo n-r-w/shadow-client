@@ -28,8 +28,12 @@ if [ -z "${WG_ALLOWED_IPS}" ]; then
     echo "WG_ALLOWED_IPS is not set. Defaulting to ${WG_ALLOWED_IPS}."
 fi
 
-if [ -n "${WG_EXCLUDED_DOMAINS}" ]; then    
-    WG_EXCLUDED_IPS=""    
+if [ -n "${WG_EXCLUDED_DOMAINS}" ] || [ -n "${WG_EXCLUDED_IPS}" ]; then
+    if [ -n "${WG_EXCLUDED_IPS}" ]; then
+        EXCLUDED_IPS=${WG_EXCLUDED_IPS}","
+    else
+        EXCLUDED_IPS=""
+    fi
     IFS=',' read -ra DOMAIN_ARRAY <<< "$WG_EXCLUDED_DOMAINS"
     
     for DOMAIN in "${DOMAIN_ARRAY[@]}"
@@ -40,16 +44,17 @@ if [ -n "${WG_EXCLUDED_DOMAINS}" ]; then
             continue
         fi
 
-        WG_EXCLUDED_IPS="$WG_EXCLUDED_IPS$IP,"
+        EXCLUDED_IPS="$EXCLUDED_IPS$IP,"
         echo "IPs for domain ${DOMAIN} are ${IP}."        
     done
-    WG_EXCLUDED_IPS="${WG_EXCLUDED_IPS%,}"
-    echo "EXCLUDED_IPS calculated to be ${WG_EXCLUDED_IPS}."
-    if [ -n "${WG_EXCLUDED_IPS}" ]; then        
-        WG_ALLOWED_IPS=$(python3 wireguard-ip-calculator.py -a ${WG_ALLOWED_IPS} -d ${WG_EXCLUDED_IPS})
-        echo "WG_ALLOWED_IPS is set to ${WG_ALLOWED_IPS}."
+    EXCLUDED_IPS="${EXCLUDED_IPS%,}"
+    echo "EXCLUDED_IPS calculated to be ${EXCLUDED_IPS}."
+    if [ -n "${EXCLUDED_IPS}" ]; then        
+        WG_ALLOWED_IPS=$(python3 wireguard-ip-calculator.py -a ${WG_ALLOWED_IPS} -d ${EXCLUDED_IPS})        
     fi
 fi
+
+echo "ALLOWED_IPS is set to ${WG_ALLOWED_IPS}."
 
 cat <<EOF > wg0.conf
 [Interface]

@@ -23,6 +23,7 @@ services:
       - WG_DNS
       - WG_ALLOWED_IPS
       - WG_EXCLUDED_DOMAINS
+      - WG_EXCLUDED_IPS
       - WG_MTU      
       - CK_IP      
 
