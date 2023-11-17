@@ -1,6 +1,9 @@
 FROM ubuntu:22.04
 
-RUN apt update && apt install -y wireguard openresolv iproute2 iptables
+RUN apt update && apt install -y wireguard openresolv iproute2 iptables python3-pip dnsutils
+RUN pip install netaddr
+
+COPY wireguard-ip-calculator.py /wireguard-ip-calculator.py
 
 COPY wg-client-up.sh /wg-client-up.sh
 RUN chmod +x /wg-client-up.sh

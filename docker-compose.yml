@@ -22,6 +22,7 @@ services:
       - WG_SERVER_PUBLIC_KEY
       - WG_DNS
       - WG_ALLOWED_IPS
+      - WG_EXCLUDED_DOMAINS
       - WG_MTU      
       - CK_IP      
 
