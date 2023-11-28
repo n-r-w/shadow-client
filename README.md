@@ -92,6 +92,8 @@ If it is necessary to exclude certain domains from the VPN:
 - Specify their names in the ```WG_EXCLUDED_DOMAINS``` variable
 - If necessary, specify the IP in the ```WG_EXCLUDED_IPS``` variable
 
+Rules for exclusions are generated at startup, so after changing ```WG_EXCLUDED_DOMAINS```/```WG_EXCLUDED_IPS```, it is necessary to reboot the operating system (better) or restart the wireguard container.
+
 ## Test run
 
 We check that everything starts (the first launch is long)
