@@ -87,6 +87,11 @@ Encryption keys that were generated earlier during the server installation proce
 - ```CK_UID```cloak client UID
 - ```CK_PUBLIC_KEY``` cloak server public key
 
+If it is necessary to exclude certain domains from the VPN:
+
+- Specify their names in the ```WG_EXCLUDED_DOMAINS``` variable
+- If necessary, specify the IP in the ```WG_EXCLUDED_IPS``` variable
+
 ## Test run
 
 We check that everything starts (the first launch is long)
