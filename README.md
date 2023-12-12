@@ -6,7 +6,7 @@
 
 Data flows through the following chain:
 
-- Computer (LAN) with the client part of this configuration specified as the gateway
+- Computer (LAN) with the client part of this configuration specified as gateway or proxy server
 - Gateway (LAN)
 - WireGuard client (LAN)
 - Cloak client (LAN)
@@ -94,6 +94,11 @@ If it is necessary to exclude certain domains from the VPN:
 
 Rules for exclusions are generated at startup, so after changing ```WG_EXCLUDED_DOMAINS```/```WG_EXCLUDED_IPS```, it is necessary to reboot the operating system (better) or restart the wireguard container.
 
+If you want to use a proxy server, specify variables:
+
+- ```PROXY_SOCKS_PORT``` danted server will be launched on this port
+- ```PROXY_HTTP_PORT``` tinyproxy server will be launched on this port
+
 ## Test run
 
 We check that everything starts (the first launch is long)
@@ -130,5 +135,12 @@ systemctl start shadow-client
 
 ## Configuring devices in the local network to connect to the VPN
 
-- Set the IP address specified in the VPN_GATEWAY variable as the gateway
-- In the network interface settings, set the MTU to 1420. This is necessary because the traffic is routed through WireGuard, which reduces the packet size.
+In case to use this configuration as a gateway:
+
+- Set the IP address specified in the ```VPN_GATEWAY``` variable as the gateway
+- In the network interface settings, set the ```MTU``` to ```1420```. This is necessary because the traffic is routed through WireGuard, which reduces the packet size.
+
+In case to use this configuration as a proxy server:
+
+- Set OS proxy settings to ```VPN_GATEWAY``` address and ports specified in the PROXY_HTTP_PORT/PROXY_SOCKS_PORT variables
+- Under linux set environment variables ```http_proxy```, ```https_proxy``` according your needs

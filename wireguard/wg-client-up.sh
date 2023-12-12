@@ -9,6 +9,18 @@ _term() {
   kill -TERM "$child" 2>/dev/null
 }
 
+/gen-proxy-config.sh
+
+if [ -n "${PROXY_SOCKS_PORT}" ]; then
+  tinyproxy -c /tinyproxy.conf
+  echo "Tinyproxy started"
+fi
+
+if [ -n "${PROXY_HTTP_PORT}" ]; then
+  danted -D -f /danted.conf
+  echo "Danted started"
+fi
+
 /gen-wg-client-config.sh
 wg-quick up /wg0.conf
 

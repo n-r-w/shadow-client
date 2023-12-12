@@ -25,7 +25,9 @@ services:
       - WG_EXCLUDED_DOMAINS
       - WG_EXCLUDED_IPS
       - WG_MTU      
-      - CK_IP      
+      - CK_IP
+      - PROXY_SOCKS_PORT
+      - PROXY_HTTP_PORT
 
   cloak:
     build:
