@@ -45,6 +45,7 @@ services:
       - CK_TRANSPORT      
       - CK_ENCRYPTION_METHOD
       - CK_NUM_CONN
+      - CK_KEEP_ALIVE
       - CK_BROWSER_SIG
       - CK_STREAM_TIMEOUT
       - CK_SERVER_NAME

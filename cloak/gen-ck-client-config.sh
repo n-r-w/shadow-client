@@ -27,6 +27,11 @@ if [ -z "${CK_NUM_CONN}" ]; then
     echo "CK_NUM_CONN is not set. Defaulting to ${CK_NUM_CONN}."
 fi
 
+if [ -z "${CK_KEEP_ALIVE}" ]; then
+    CK_KEEP_ALIVE=0
+    echo "CK_KEEP_ALIVE is not set. Defaulting to ${CK_KEEP_ALIVE}."
+fi
+
 if [ -z "${CK_BROWSER_SIG}" ]; then
     CK_BROWSER_SIG="chrome"
     echo "CK_BROWSER_SIG is not set. Defaulting to ${CK_BROWSER_SIG}."
@@ -60,6 +65,7 @@ cat <<EOF > ck-client.json
     "ServerName": "${CK_SERVER_NAME}",
     "AlternativeNames": [${CK_ALTERNATIVE_NAMES}],
     "NumConn": ${CK_NUM_CONN},
+    "KeepAlive": ${CK_KEEP_ALIVE},
     "BrowserSig": "${CK_BROWSER_SIG}",
     "StreamTimeout": ${CK_STREAM_TIMEOUT}
 }
