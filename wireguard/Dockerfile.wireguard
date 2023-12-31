@@ -14,6 +14,9 @@ RUN chmod +x /gen-wg-client-config.sh
 COPY gen-proxy-config.sh /gen-proxy-config.sh
 RUN chmod +x /gen-proxy-config.sh
 
+COPY ping.sh /ping.sh
+RUN chmod +x /ping.sh
+
 COPY danted.conf /danted.conf
 COPY tinyproxy.conf /tinyproxy.conf
 
