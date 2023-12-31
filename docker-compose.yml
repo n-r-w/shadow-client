@@ -5,6 +5,8 @@ services:
       context: ./wireguard
       dockerfile: Dockerfile.wireguard
     restart: unless-stopped
+    depends_on:
+      - cloak
     logging:
       driver: journald
     cap_add:
