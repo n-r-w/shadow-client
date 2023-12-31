@@ -5,6 +5,8 @@ services:
       context: ./wireguard
       dockerfile: Dockerfile.wireguard
     restart: unless-stopped
+    depends_on:
+      - cloak
     logging:
       driver: journald
     cap_add:
@@ -28,6 +30,9 @@ services:
       - CK_IP
       - PROXY_SOCKS_PORT
       - PROXY_HTTP_PORT
+      - MIN_PING_DELAY
+      - MAX_PING_DELAY
+      - PING_HOST
 
   cloak:
     build:

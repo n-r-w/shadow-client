@@ -99,6 +99,12 @@ If you want to use a proxy server, specify variables:
 - ```PROXY_SOCKS_PORT``` danted server will be launched on this port
 - ```PROXY_HTTP_PORT``` tinyproxy server will be launched on this port
 
+Despite the presence of the cloak keepalive option, the connection to the cloak server may be interrupted due to inactivity and then not restored. To solve this problem, you can use the following environment variables. Ping will be performed in a random range from MIN_PING_DELAY to MAX_PING_DELAY seconds.
+
+- ```PING_HOST``` host to ping
+- ```MIN_PING_DELAY``` minimum ping delay
+- ```MAX_PING_DELAY``` maximum ping delay
+
 ## Test run
 
 We check that everything starts (the first launch is long)

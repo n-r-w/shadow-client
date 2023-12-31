@@ -24,6 +24,19 @@ fi
 /gen-wg-client-config.sh
 wg-quick up /wg0.conf
 
+if [ -n "${PING_HOST}" ]; then
+  if [ -z "${MIN_PING_DELAY}" ]; then
+    export MIN_PING_DELAY=10
+    echo "MIN_PING_DELAY not set, using default value: ${MIN_PING_DELAY}"
+  fi
+  if [ -z "${MAX_PING_DELAY}" ]; then
+    export MAX_PING_DELAY=360
+    echo "MAX_PING_DELAY not set, using default value: ${MAX_PING_DELAY}"
+  fi
+
+  /ping.sh &
+fi
+
 # Sets up a handler for the SIGTERM signal to gracefully terminate a process
 trap _term SIGTERM
 # Displays information about the current WireGuard interface state

@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get install -y wireguard openresolv iproute2 iptables python3-pip dnsutils tinyproxy dante-server
+RUN apt-get update && apt-get install -y wireguard openresolv iproute2 iptables python3-pip dnsutils tinyproxy dante-server iputils-ping
 RUN pip install netaddr
 
 COPY wireguard-ip-calculator.py /wireguard-ip-calculator.py
@@ -13,6 +13,9 @@ RUN chmod +x /gen-wg-client-config.sh
 
 COPY gen-proxy-config.sh /gen-proxy-config.sh
 RUN chmod +x /gen-proxy-config.sh
+
+COPY ping.sh /ping.sh
+RUN chmod +x /ping.sh
 
 COPY danted.conf /danted.conf
 COPY tinyproxy.conf /tinyproxy.conf
